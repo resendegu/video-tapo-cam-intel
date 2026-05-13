@@ -4,9 +4,13 @@
 FROM python:3.11-slim
 
 # Install system dependencies:
+#   build-essential/gcc/libffi-dev - needed to build Python native extensions on multi-arch builds
 #   ffmpeg  - required by pytapo Downloader for video assembly
 #   libgomp1 - OpenMP runtime required by some numpy/ML deps on ARM
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    gcc \
+    libffi-dev \
     ffmpeg \
     libgomp1 \
     && rm -rf /var/lib/apt/lists/*
