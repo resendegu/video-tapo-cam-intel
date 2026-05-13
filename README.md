@@ -103,8 +103,8 @@ AI analysis history with job status, units consumed, and timestamps. Click any r
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-username/onvif-video-cam-intel.git
-cd onvif-video-cam-intel
+git clone https://github.com/resendegu/video-tapo-cam-intel.git
+cd video-tapo-cam-intel
 ```
 
 ### 2. Configure environment
@@ -140,7 +140,7 @@ credentials/service-account.json
 ### 4. Run
 
 ```bash
-docker compose up --build
+docker compose up -d
 ```
 
 Open **http://localhost:8000** in your browser.
@@ -149,18 +149,9 @@ Open **http://localhost:8000** in your browser.
 
 ## Multi-Platform Deployment (Orange Pi / Raspberry Pi)
 
-The image supports `linux/amd64`, `linux/arm64`, and `linux/arm/v7` (armhf).
+The pre-built image hosted on GitHub Container Registry (GHCR) natively supports `linux/amd64`, `linux/arm64`, and `linux/arm/v7` (armhf). 
 
-**To build and push a multi-arch image:**
-
-```bash
-docker buildx create --use --name multibuilder
-docker buildx build \
-  --platform linux/amd64,linux/arm64,linux/arm/v7 \
-  --tag your-registry/tapo-intel:latest \
-  --push \
-  ./backend
-```
+When you run `docker compose up -d`, Docker will automatically pull the correct architecture for your device (e.g. Raspberry Pi or Orange Pi). There is no need to build the image locally.
 
 **For Orange Pi / Linux hosts**, enable host networking so the container can reach the camera on your LAN. In `docker-compose.yml`, uncomment:
 

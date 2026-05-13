@@ -1,10 +1,6 @@
 services:
   app:
-    build:
-      context: ./backend
-      # Multi-platform targets: linux/amd64 (x86), linux/arm64, linux/arm/v7 (armhf)
-      # For multi-arch push: see BUILD.md
-    image: tapo-intel:latest
+    image: ghcr.io/resendegu/video-tapo-cam-intel:latest
     restart: unless-stopped
     ports:
       - "8000:8000"
