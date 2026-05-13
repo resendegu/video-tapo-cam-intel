@@ -84,7 +84,7 @@ async def get_clips_for_date(date: str, db: aiosqlite.Connection = Depends(get_d
 
 
 @router.post("/download")
-async def download_clip(request: DownloadRequest, db: aiosqlite.Connection = Depends(get_db)):
+async def download_clip(request: DownloadRequest):
     """
     Download a clip from the camera's SD card.
     Returns Server-Sent Events with download progress.
@@ -111,14 +111,15 @@ async def download_clip(request: DownloadRequest, db: aiosqlite.Connection = Dep
         # Mark as downloaded in DB (runs on both clean finish and graceful cleanup error)
         file_size = os.path.getsize(file_path) if os.path.exists(file_path) else None
         if file_size:
-            await db.execute(
-                """
-                UPDATE recordings SET downloaded = 1, file_size = ?
-                WHERE start_time = ?
-                """,
-                (file_size, request.start_time),
-            )
-            await db.commit()
+            async with aiosqlite.connect(settings.DB_PATH) as db:
+                await db.execute(
+                    """
+                    UPDATE recordings SET downloaded = 1, file_size = ?
+                    WHERE start_time = ?
+                    """,
+                    (file_size, request.start_time),
+                )
+                await db.commit()
             yield f"data: {json.dumps({'done': True, 'filename': filename, 'size_bytes': file_size})}\n\n"
         else:
             yield f"data: {json.dumps({'error': 'File not found after download'})}\n\n"
