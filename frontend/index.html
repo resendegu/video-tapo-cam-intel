@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tapo Camera Intelligence</title>
+  <meta name="description" content="Monitor, download, and analyze Tapo C500 recordings with Google Cloud AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M20.188 10.934c.212.592.312 1.219.312 1.866 0 .647-.1 1.274-.312 1.866l2.119 1.524a10.016 10.016 0 000-6.78l-2.119 1.524z"/>
+          <path d="M3.812 13.066A7.97 7.97 0 013.5 11.2c0-.647.1-1.274.312-1.866L1.693 7.81a10.016 10.016 0 000 6.78l2.119-1.524z"/>
+          <path d="M10.934 3.812A7.97 7.97 0 0112 3.5c.647 0 1.274.1 1.866.312L15.39 1.693a10.016 10.016 0 00-6.78 0L10.934 3.812z"/>
+          <path d="M13.066 20.188A7.97 7.97 0 0112 20.5c-.647 0-1.274-.1-1.866-.312L8.61 22.307a10.016 10.016 0 006.78 0L13.066 20.188z"/>
+        </svg>
+      </div>
+      <span class="logo-text">TapoIntel</span>
+    </div>
+
+    <ul class="nav-links">
+      <li>
+        <a href="#dashboard" class="nav-link active" data-view="dashboard" id="nav-dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="#recordings" class="nav-link" data-view="recordings" id="nav-recordings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          Recordings
+        </a>
+      </li>
+      <li>
+        <a href="#analysis" class="nav-link" data-view="analysis" id="nav-analysis">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          Analysis
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="camera-status" id="camera-status-indicator">
+        <div class="status-dot status-checking"></div>
+        <span>Connecting…</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content" id="main-content">
+    <div id="view-container"></div>
+  </main>
+
+  <!-- Toast notifications -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/views/dashboard.js"></script>
+  <script src="js/views/recordings.js"></script>
+  <script src="js/views/analysis.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

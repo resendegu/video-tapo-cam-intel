@@ -1,0 +1,37 @@
+services:
+  app:
+    build:
+      context: ./backend
+      # Multi-platform targets: linux/amd64 (x86), linux/arm64, linux/arm/v7 (armhf)
+      # For multi-arch push: see BUILD.md
+    image: tapo-intel:latest
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file: .env
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/service-account.json
+      - DATA_DIR=/app/data
+    volumes:
+      - ./data:/app/data
+      - ./frontend:/app/static:ro
+      - ./credentials:/app/credentials:ro
+    # NOTE on networking:
+    # - Linux hosts (incl. Orange Pi): use `network_mode: host` below and remove the
+    #   `ports` section above. This gives direct LAN access to reach the camera.
+    # - Docker Desktop (Windows/macOS): keep port mapping above. The camera must be
+    #   reachable from the host; Docker Desktop's VM bridges traffic via the host network.
+    #
+    # To switch to host networking on Linux, uncomment:
+    # network_mode: host
+
+    # extra_hosts allows the container to route back through the host on Linux bridge mode
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8000/api/camera/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
