@@ -142,6 +142,7 @@ venv/
 # Analysis files
 methods.txt
 *.txt
+!backend/requirements.txt
 
 # Application data — recordings, frames, database
 data/
