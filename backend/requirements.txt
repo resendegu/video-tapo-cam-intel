@@ -1,0 +1,9 @@
+aiofiles==25.1.0
+aiosqlite==0.22.1
+fastapi==0.115.14
+google-cloud-videointelligence==2.19.0
+google-cloud-vision==3.14.0
+nest-asyncio==1.6.0
+pytapo==3.4.13
+python-dotenv==1.2.2
+uvicorn==0.46.0
